@@ -13,26 +13,40 @@ public class Controller {
 
     // 1. lostark에서 aution에 검색을 합니다.
     public ArrayList<Item> search(String query) {
-        System.out.println("Controller.search");
-        System.exit(1);
-        return null;
+        if (query == null || query.equals("")) {
+            return null;
+        }
+        String html = this.service.searching(query);
+        ArrayList<Item> list = this.service.parsing(html);
+        return list;
     }
 
     public ArrayList<Item> checkItem(ArrayList<Item> list) {
-        System.out.println("Controller.checkItem");
-        System.exit(1);
-        return null;
+        if (list == null || list.size() == 0) {
+            return null;
+        }
+        ArrayList<Item> checkedList = this.service.checkItems(list);
+        return checkedList;
     }
 
     public ArrayList<String> buying(ArrayList<Item> list) {
-        System.out.println("Controller.buying");
-        System.exit(1);
-        return null;
+        if (list == null || list.size() == 0) {
+            return null;
+        }
+        ArrayList<String> messages = this.service.buying(list);
+        return messages;
     }
 
     public String notice(ArrayList<String> messages) {
-        System.out.println("Controller.notice");
-        System.exit(1);
-        return null;
+        if (messages == null || messages.size() == 0) {
+            return "FAILED";
+        }
+        for (int i = 0; i < messages.size(); i += 1) {
+            String message = messages.get(i);
+            if (message != null && message != "") {
+                this.service.notifying(message);
+            }
+        }
+        return "SUCCESS";
     }
 }
